@@ -24,6 +24,7 @@
             <thead>
               <tr>
                 <th scope="col">ID</th>
+                <th scope="col">img</th>
                 <th scope="col">Name</th>
                 <th scope="col">Surname</th>
                 <th scope="col">E-mail</th>
@@ -44,28 +45,41 @@
                 </div>
                 <div class="modal-body">
                     <form id="clientForm">
-                        <input type="hidden" id="clientId">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nom</label>
-                            <input type="text" class="form-control" id="name" required>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                            <div id="nameError" class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3">
-                            <label for="surname" class="form-label">Prénom</label>
-                            <input type="text" class="form-control" id="surname" required>
+                        <div class="form-group">
+                            <label for="surname">Surname</label>
+                            <input type="text" class="form-control" id="surname" name="surname">
+                            <div id="surnameError" class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" required>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                            <div id="emailError" class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3">
-                            <label for="address" class="form-label">Adresse</label>
-                            <input type="text" class="form-control" id="address" required>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" name="address">
+                            <div id="addressError" class="invalid-feedback"></div>
                         </div>
-                        <div class="mb-3">
-                            <label for="phone_number" class="form-label">Numero de telephone</label>
-                            <input type="text" class="form-control" id="phone_number" required>
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="text" class="form-control" id="phone_number" name="phone_number">
+                            <div id="phone_numberError" class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="file_name">Photo de profil</label>
+                            <input type="file" class="form-control" id="file_name" name="file_name" accept="image/*">
+                            <div id="file_nameError" class="invalid-feedback"></div>
+                        </div>
+                        <div id="imagePreview" class="mt-2" style="display: none;">
+                            <img src="" id='imagick' alt="Image preview" style="max-width: 200px; max-height: 200px;">
                         </div>
                     </form>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -82,7 +96,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
-    <script src="{{asset('lib/utils.js')}}"></script>
+    <script src="{{asset('lib/new.js')}}"></script>
 </body>
 
 </html>

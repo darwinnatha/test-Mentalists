@@ -18,7 +18,7 @@ class ResponseClass
     }
 
     public static function broke($error, $message='Somethings went wrong ! Process Fail'){
-        Log::warning($error);
+        Log::warning('response'.$error);
         throw new HttpResponseException(response()->json(['message'=>$message], 500));
     }
 

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\ResponseClass;
 use App\Models\Client;
+use App\Classes\ResponseClass;
+use Illuminate\Support\Facades\Log;
+use App\Http\Resources\ClientResource;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
-use App\Http\Resources\ClientResource;
 
 class ClientController extends Controller
 {
@@ -32,19 +34,26 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-
+        Log::alert($request);
         $data = [
             'name' => $request->name,
             'surname'=> $request->surname,
             'address' => $request->address,
             'phone_number' => $request->phone_number,
             'email' => $request->email
+
         ];
         try {
+            $data = $request->validated();
+
+            if ($request->hasFile('file_name')) {
+                $path = $request->file('file_name')->store('client_images', 'public');
+                $data['file_name'] = $path;
+            }
             $client = Client::create($data);
-            
-            return ResponseClass::respond(ClientResource::collection($client), 'Client create successfuly !', 201);
+            return ResponseClass::respond(new ClientResource($client), 'Client created successfully!', 201);
         } catch (\Exception $e) {
+            Log::warning('excep'.$e);
             return ResponseClass::broke($e->getMessage());
         }
     }
@@ -55,7 +64,11 @@ class ClientController extends Controller
     public function show(string $id)
     {
         $client = Client::find($id);
-        return ResponseClass::respond(ClientResource::collection($client), '', 201);
+        if ($client) {
+            return ResponseClass::respond(new ClientResource($client), '', 201);
+        } else {
+            return ResponseClass::broke('Client not found', 404);
+        }
     }
 
     /**
@@ -78,14 +91,25 @@ class ClientController extends Controller
             'phone_number' => $request->phone_number,
             'email' => $request->email
         ];
-try {
-    Client::where('id', $id)->update($data);
-    $client = Client::find($id);
-    return ResponseClass::respond(ClientResource::collection($client), 'Client\'s Informatiosn updated succesfully', 201);
-} catch (\Exception $e) {
-    return ResponseClass::broke($e->getMessage());
-}
+        try {
+            $data = $request->validated();
+            $client = Client::findOrFail($id);
 
+            if ($request->hasFile('file_name')) {
+                // Supprimer l'ancienne image si elle existe
+                if ($client->file_name) {
+                    Storage::disk('public')->delete($client->file_name);
+                }
+                $path = $request->file('file_name')->store('client_images', 'public');
+                $data['file_name'] = $path;
+            }
+
+            $client->update($data);
+            return ResponseClass::respond(new ClientResource($client), 'Client\'s information updated successfully', 200);
+        } catch (\Exception $e) {
+            Log::warning('excep'.$e);
+            return ResponseClass::broke($e->getMessage());
+        }
     }
 
     /**
@@ -94,8 +118,12 @@ try {
     public function destroy(string $id)
     {
         $client = Client::find($id);
-        $client_name = $client->name;
-        $client->delete();
-    return ResponseClass::respond('', 'Client Deleted succesfully', 201);
+        if ($client) {
+            $client_name = $client->name;
+            $client->delete();
+            return ResponseClass::respond('', 'Client deleted successfully', 201);
+        } else {
+            return ResponseClass::broke('Client not found', 404);
+        }
     }
 }

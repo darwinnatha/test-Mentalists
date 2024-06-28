@@ -15,5 +15,6 @@ class Client extends Model
         'address',
         'phone_number',
         'email',
+        'file_name'
     ];
 }

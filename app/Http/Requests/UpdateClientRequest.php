@@ -29,15 +29,16 @@ class UpdateClientRequest extends FormRequest
             'email' => 'email | required',
             'address' => 'string | required',
             'phone_number' => 'string',
+            'file_name' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 
-    public function failedValidation(Validator $validator){
-        throw new HttpResponseException(response()->json([
-        'success' => false,
-        'message' => 'Validations errors',
-        'data' => $validator->errors,
-        ]))     ;   
-    }
+    // public function failedValidation(Validator $validator){
+    //     throw new HttpResponseException(response()->json([
+    //     'success' => false,
+    //     'message' => 'Validations errors',
+    //     'data' => $validator->errors(),
+    //     ], 422))     ;
+    // }
 }
 

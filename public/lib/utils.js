@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         columns: [
-            { data: 'id' }, 
+            { data: 'id' },
             { data: 'name' },
             { data: 'surname' },
             { data: 'email' },
@@ -31,9 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Rafraîchir les données toutes les 15 secondes
-    setInterval(function () {
+    /* setInterval(function () {
         table.ajax.reload(null, false); // false pour éviter le repositionnement de la page après le rechargement
-    }, 15000);
+    }, 15000); */
 
     // Ouvrir le modal pour remplir un client
     document.getElementById('addClientBtn').addEventListener('click', function () {
