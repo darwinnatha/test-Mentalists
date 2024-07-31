@@ -46,6 +46,9 @@ $(document).ready(function () {
         resetForm();
         $('#clientForm input').prop('disabled', false);
         $('#saveClient').show();
+        $('#file_name').show()
+        $('#imagePreview img').attr('src', ``);
+        $('#imagePreview').hide();
         $('#clientModalLabel').text('Ajouter un client');
         clientModal.show();
     });
@@ -70,10 +73,11 @@ $(document).ready(function () {
         //     phone_number: $('#phone_number').val()
         // };
         const formData = new FormData($('#clientForm')[0]);
-        console.log(formData)
+
 
         const url = id ? `/api/clients/${id}` : '/api/clients';
-        const method = id ? 'PUT' : 'POST';
+        const method =  'POST';
+        $('#_method').val(id ? 'PUT' : 'POST');
 
         $.ajax({
             url: url,
@@ -150,7 +154,8 @@ $(document).ready(function () {
         $('#email').val(data.email);
         $('#address').val(data.address);
         $('#phone_number').val(data.phone_number);
-
+        $('#imagePreview img').attr('src', `/storage/${data.file_name}`);
+        $('#imagePreview').show();
         $('#clientForm input').prop('disabled', !isEditable);
         $('#saveClient').toggle(isEditable);
         $('#clientModalLabel').text(isEditable ? 'Modifier un client' : 'Détails du client');
@@ -161,6 +166,7 @@ $(document).ready(function () {
     // Voir un client
     $('#mytable').on('click', '.view-btn', function () {
         const data = $(this).data('id');
+        $('#file_name').hide()
         loadClientData(data, false);
     });
 
@@ -168,6 +174,7 @@ $(document).ready(function () {
     $('#mytable').on('click', '.edit-btn', function () {
         const data = $(this).data('id');
         loadClientData(data, true);
+        $('#file_name').show()
     });
 
     // Supprimer un client

@@ -9,13 +9,6 @@ use function Laravel\Prompts\error;
 
 class ResponseClass
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
-    {
-        //
-    }
 
     public static function broke($error, $message='Somethings went wrong ! Process Fail'){
         Log::warning('response'.$error);

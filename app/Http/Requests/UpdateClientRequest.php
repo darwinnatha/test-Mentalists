@@ -29,7 +29,7 @@ class UpdateClientRequest extends FormRequest
             'email' => 'email | required',
             'address' => 'string | required',
             'phone_number' => 'string',
-            'file_name' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'file_name' => 'image|mimes:jpeg,png,jpg,gif|max:2048|required',
         ];
     }
 

@@ -44,7 +44,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="clientForm">
+                    <form id="clientForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="clientId" name="clientId">
+                        </div>
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name">

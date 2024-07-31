@@ -40,6 +40,7 @@ class ClientController extends Controller
             'surname'=> $request->surname,
             'address' => $request->address,
             'phone_number' => $request->phone_number,
+            'file_name' => $request->file_name,
             'email' => $request->email
 
         ];
@@ -89,7 +90,8 @@ class ClientController extends Controller
             'surname'=> $request->surname,
             'address' => $request->address,
             'phone_number' => $request->phone_number,
-            'email' => $request->email
+            'email' => $request->email,
+            'file_name' => $request->file_name,
         ];
         try {
             $data = $request->validated();
